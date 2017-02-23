@@ -200,7 +200,7 @@ int main()
 	sort(v.begin(), v.end(), compare_func);
 	v = convex_hull_finder(v);
 	for(unsigned i = 0; i < v.size(); ++i) {
-		cout<<"( "<<v[i].first<<" , "<<v[i].second<<" )\n";
+		cout<<v[i].first<<" "<<v[i].second<<"\n";
 	}
 	
 	return 0;
