@@ -6,7 +6,7 @@
 #include <vector>
 // #include <deque>
 // #include <list>
-// #include <set>
+#include <set>
 #include <map>
 // #include <iterator>
 #include <algorithm>
@@ -15,6 +15,7 @@
 
 using namespace std;
 vector<vector<int>> Memory;
+set<int> extracted_elements;
 
 int knapsack_bottom_up_DP(vector<int> v, vector<int> w, int n, int W){
 	vector<vector<int>> Table;
@@ -33,7 +34,11 @@ int knapsack_bottom_up_DP(vector<int> v, vector<int> w, int n, int W){
     		else if (w[i-1] > j)
     			Table[i][j] = Table[i-1][j];
     		else{
+
     			Table[i][j] = max(Table[i-1][j], Table[i-1][j-w[i-1]] + v[i-1]);
+    			if(Table[i-1][j] <= Table[i-1][j-w[i-1]] + v[i-1]) {
+    				extracted_elements.insert(i-1);
+    			}
     		}	
 
     	}
@@ -63,8 +68,6 @@ int knapsack_top_down_DP(vector<int> v, vector<int> w, int n, int W){
 
 int main()
 {
-
-
 	int n; 
 	cin>>n;
 	vector<int> values;
@@ -94,6 +97,11 @@ int main()
     }
 	cout<<"\nMax Value is --(Top Down DP)--> "
 		<<knapsack_top_down_DP(values, weights, n, Max_weight)<<"\n";
+
+	cout<<"Elements Extracted will be"<<"\n";
+	for (set<int>::iterator it = extracted_elements.begin(); it != extracted_elements.end(); ++it)  {
+		cout<<values[*it]<<" "<<weights[*it]<<'\n';
+	}
 	
 
 	
